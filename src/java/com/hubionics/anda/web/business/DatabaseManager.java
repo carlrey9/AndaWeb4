@@ -151,6 +151,7 @@ public class DatabaseManager {
         try {
             Usuario u = usuarioFacade.find(metricsVO.getUserID());
 
+            
             if (u != null) {
                 Metricasanda metricasanda = new Metricasanda();
                 metricasanda.setDescripcionMetrica(metricsVO.getMetricDescription());
@@ -167,6 +168,7 @@ public class DatabaseManager {
             return Util.getError(ErroresRespuesta.SAVE_METRICS_ERROR_1);
         }
     }
+    
 
     public Respuesta getSonidos() {
 
@@ -397,6 +399,34 @@ public class DatabaseManager {
                     .build();
         }
     }
+    
+    
+    
+    public Respuesta getidDevice(UsuarioVO usuarioVO) {
+        try {
+            List<Usuario> usuarios = usuarioFacade.findAll();
+            String idDevice = "no devices with this idDevice";
+            if(usuarios != null){
+                for(int i = 0; i < usuarios.size();i++){
+                    Usuario usuarioTemp = usuarios.get(i);
+                    if(usuarioTemp.getIdDevice() == usuarioVO.getIdDevice()){
+                        idDevice = usuarioTemp.getIdDevice();
+                    }   
+            
+                }
+            }
+            return new Respuesta.Builder().status(Respuesta.SUCCESS).errorCode(ErroresRespuesta.OK).data(idDevice).build();
+      
+        } catch (Exception e) {
+
+            return new Respuesta.Builder().status(Respuesta.ERROR)
+                    .errorCode(ErroresRespuesta.GET_ID_DEVICE_ERROR_1)
+                    .build();
+        }
+    }
+    
+    
+    
 
     public Respuesta getVersionApp() {
         try {

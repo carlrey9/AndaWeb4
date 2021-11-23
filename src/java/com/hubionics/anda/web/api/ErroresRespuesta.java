@@ -23,6 +23,12 @@ public class ErroresRespuesta {
     public static final String GET_VIGENCIA_PAQUETE_ERROR_2 = "ERR502";
     public static final String GET_VIGENCIA_PAQUETE_ERROR_3 = "ERR503";
     public static final String GET_VIGENCIA_PAQUETE_ERROR_4 = "ERR504";
+    
+    public static final String GET_ID_DEVICE_ERROR_1 = "ERR501";
+    public static final String GET_ID_DEVICE_ERROR_2 = "ERR502";
+    public static final String GET_ID_DEVICE_ERROR_3 = "ERR503";
+    public static final String GET_ID_DEVICE_ERROR_4 = "ERR504";
+    
     public static final String GET_VERSION_APP_ERROR = "ERROR601";
     public static final String CODIGOACT_ERROR_1 = "ERR701";
     public static final String CODIGOACT_ERROR_2 = "ERR702";
