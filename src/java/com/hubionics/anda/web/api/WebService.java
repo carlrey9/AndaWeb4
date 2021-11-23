@@ -83,6 +83,18 @@ public class WebService {
             return Util.getError(ErroresRespuesta.NO_AUTENTICADO);
         }
     }
+    
+    @POST
+    @Path("getIdDevice")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Respuesta getIdDevice(UsuarioVO usuarioVO) {
+        if (autenticado) {
+            return databaseManager.getIdDevice(usuarioVO);
+        } else {
+            return Util.getError(ErroresRespuesta.NO_AUTENTICADO);
+        }
+    }
 
     @POST
     @Path("getVersionApp")

@@ -400,9 +400,7 @@ public class DatabaseManager {
         }
     }
     
-    
-    
-    public Respuesta getidDevice(UsuarioVO usuarioVO) {
+    public Respuesta getIdDevice(UsuarioVO usuarioVO) {
         try {
             List<Usuario> usuarios = usuarioFacade.findAll();
             String idDevice = "no devices with this idDevice";
@@ -425,9 +423,6 @@ public class DatabaseManager {
         }
     }
     
-    
-    
-
     public Respuesta getVersionApp() {
         try {
             List<Appdata> appdatas = appdataFacade.findAll();
