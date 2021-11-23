@@ -1,0 +1,42 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.hubionics.anda.web.facade;
+
+import com.hubionics.anda.web.entity.CodigosActivacion;
+import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+
+/**
+ *
+ * @author hubio
+ */
+@Stateless
+public class CodigosActivacionFacade extends AbstractFacade<CodigosActivacion> {
+
+    @PersistenceContext(unitName = "AndaWeb4PU")
+    private EntityManager em;
+
+    @Override
+    protected EntityManager getEntityManager() {
+        return em;
+    }
+
+    public CodigosActivacionFacade() {
+        super(CodigosActivacion.class);
+    }
+    public CodigosActivacion findByCodigoActivacion(String codigoActivacion) {
+        try {
+            Query q = getEntityManager().createQuery("SELECT CA FROM CodigosActivacion CA WHERE CA.codigoActivacion = :codact");
+            q.setParameter("codact", codigoActivacion);
+            return (CodigosActivacion) q.getSingleResult();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+    
+}

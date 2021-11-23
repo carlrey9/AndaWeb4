@@ -1,0 +1,40 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 12/12/2017, 06:40:50 PM
+    Author     : hubio
+*/
+
+.footer-bg{
+    background-color: #717171;
+}
+.body-colordark{
+    background-color: #f6f6f6;
+}
+.bold-titulo{
+    font-weight: 700;
+}
+.tamano-info{
+    font-size: 25px;
+}
+
+.image-container {
+  display: table;
+  margin: 0 auto;
+}
+.logo-head{
+
+    margin-left: 15px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+.logo-footer{
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+.header-bg{
+    background-color: #000021;
+}

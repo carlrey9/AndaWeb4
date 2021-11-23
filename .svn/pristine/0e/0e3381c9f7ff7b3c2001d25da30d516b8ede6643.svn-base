@@ -1,0 +1,338 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.hubionics.anda.web.entity;
+
+import java.io.Serializable;
+import java.util.Date;
+import java.util.List;
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+
+/**
+ *
+ * @author hubio
+ */
+@Entity
+@Table(name = "usuario")
+@XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "Usuario.findAll", query = "SELECT u FROM Usuario u"),
+    @NamedQuery(name = "Usuario.findByIdUsuario", query = "SELECT u FROM Usuario u WHERE u.idUsuario = :idUsuario"),
+    @NamedQuery(name = "Usuario.findByPasswdUsuario", query = "SELECT u FROM Usuario u WHERE u.passwdUsuario = :passwdUsuario"),
+    @NamedQuery(name = "Usuario.findByFacebookuserID", query = "SELECT u FROM Usuario u WHERE u.facebookuserID = :facebookuserID"),
+    @NamedQuery(name = "Usuario.findByUsuarioActivo", query = "SELECT u FROM Usuario u WHERE u.usuarioActivo = :usuarioActivo"),
+    @NamedQuery(name = "Usuario.findByCorreoConfirmado", query = "SELECT u FROM Usuario u WHERE u.correoConfirmado = :correoConfirmado"),
+    @NamedQuery(name = "Usuario.findByTokenConfirmarCorreo", query = "SELECT u FROM Usuario u WHERE u.tokenConfirmarCorreo = :tokenConfirmarCorreo"),
+    @NamedQuery(name = "Usuario.findByEmailInfoUsuario", query = "SELECT u FROM Usuario u WHERE u.emailInfoUsuario = :emailInfoUsuario"),
+    @NamedQuery(name = "Usuario.findByFechaCreacionUsuario", query = "SELECT u FROM Usuario u WHERE u.fechaCreacionUsuario = :fechaCreacionUsuario"),
+    @NamedQuery(name = "Usuario.findByFirebaseToken", query = "SELECT u FROM Usuario u WHERE u.firebaseToken = :firebaseToken")})
+public class Usuario implements Serializable {
+
+    @Size(max = 45)
+    @Column(name = "token_recuperar_contrasena")
+    private String tokenRecuperarContrasena;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUsuario")
+    private List<UsuarioDatosMedicos> usuarioDatosMedicosList;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUsuario")
+    private List<Metricasanda> metricasandaList;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUsuario")
+    private List<AndaRequirements> andaRequirementsList;
+
+    @Column(name = "usuario_last_login")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date usuarioLastLogin;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUsuario")
+    private List<ComprasLog> comprasLogList;
+
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "id_usuario")
+    private Integer idUsuario;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 64)
+    @Column(name = "passwd_usuario")
+    private String passwdUsuario;
+    @Size(max = 100)
+    @Column(name = "facebook_userID")
+    private String facebookuserID;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "usuario_activo")
+    private int usuarioActivo;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "correo_confirmado")
+    private int correoConfirmado;
+    @Size(max = 128)
+    @Column(name = "token_confirmar_correo")
+    private String tokenConfirmarCorreo;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 60)
+    @Column(name = "email_info_usuario")
+    private String emailInfoUsuario;
+    @Column(name = "fecha_creacion_usuario")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechaCreacionUsuario;
+    @Size(max = 255)
+    @Column(name = "firebase_token")
+    private String firebaseToken;
+    @JoinColumn(name = "id_rol_usuario", referencedColumnName = "id_rol_usuario")
+    @ManyToOne(optional = false)
+    private RolUsuario idRolUsuario;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUsuario")
+    private List<Invoice> invoiceList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUsuario")
+    private List<UsuarioPaquete> usuarioPaqueteList;
+    @OneToMany(mappedBy = "idUsuario")
+    private List<CodigosActivacion> codigosActivacionList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUsuario")
+    private List<InformacionUsuario> informacionUsuarioList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUsuarioFk")
+    private List<UsuarioLog> usuarioLogList;
+
+    public Usuario() {
+    }
+
+    public Usuario(Integer idUsuario) {
+        this.idUsuario = idUsuario;
+    }
+
+    public Usuario(Integer idUsuario, String passwdUsuario, int usuarioActivo, int correoConfirmado, String emailInfoUsuario) {
+        this.idUsuario = idUsuario;
+        this.passwdUsuario = passwdUsuario;
+        this.usuarioActivo = usuarioActivo;
+        this.correoConfirmado = correoConfirmado;
+        this.emailInfoUsuario = emailInfoUsuario;
+    }
+
+    public Integer getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(Integer idUsuario) {
+        this.idUsuario = idUsuario;
+    }
+
+    public String getPasswdUsuario() {
+        return passwdUsuario;
+    }
+
+    public void setPasswdUsuario(String passwdUsuario) {
+        this.passwdUsuario = passwdUsuario;
+    }
+
+    public String getFacebookuserID() {
+        return facebookuserID;
+    }
+
+    public void setFacebookuserID(String facebookuserID) {
+        this.facebookuserID = facebookuserID;
+    }
+
+    public int getUsuarioActivo() {
+        return usuarioActivo;
+    }
+
+    public void setUsuarioActivo(int usuarioActivo) {
+        this.usuarioActivo = usuarioActivo;
+    }
+
+    public int getCorreoConfirmado() {
+        return correoConfirmado;
+    }
+
+    public void setCorreoConfirmado(int correoConfirmado) {
+        this.correoConfirmado = correoConfirmado;
+    }
+
+    public String getTokenConfirmarCorreo() {
+        return tokenConfirmarCorreo;
+    }
+
+    public void setTokenConfirmarCorreo(String tokenConfirmarCorreo) {
+        this.tokenConfirmarCorreo = tokenConfirmarCorreo;
+    }
+
+    public String getEmailInfoUsuario() {
+        return emailInfoUsuario;
+    }
+
+    public void setEmailInfoUsuario(String emailInfoUsuario) {
+        this.emailInfoUsuario = emailInfoUsuario;
+    }
+
+    public Date getFechaCreacionUsuario() {
+        return fechaCreacionUsuario;
+    }
+
+    public void setFechaCreacionUsuario(Date fechaCreacionUsuario) {
+        this.fechaCreacionUsuario = fechaCreacionUsuario;
+    }
+
+    public String getFirebaseToken() {
+        return firebaseToken;
+    }
+
+    public void setFirebaseToken(String firebaseToken) {
+        this.firebaseToken = firebaseToken;
+    }
+
+    public RolUsuario getIdRolUsuario() {
+        return idRolUsuario;
+    }
+
+    public void setIdRolUsuario(RolUsuario idRolUsuario) {
+        this.idRolUsuario = idRolUsuario;
+    }
+
+    @XmlTransient
+    public List<Invoice> getInvoiceList() {
+        return invoiceList;
+    }
+
+    public void setInvoiceList(List<Invoice> invoiceList) {
+        this.invoiceList = invoiceList;
+    }
+
+    @XmlTransient
+    public List<UsuarioPaquete> getUsuarioPaqueteList() {
+        return usuarioPaqueteList;
+    }
+
+    public void setUsuarioPaqueteList(List<UsuarioPaquete> usuarioPaqueteList) {
+        this.usuarioPaqueteList = usuarioPaqueteList;
+    }
+
+    @XmlTransient
+    public List<CodigosActivacion> getCodigosActivacionList() {
+        return codigosActivacionList;
+    }
+
+    public void setCodigosActivacionList(List<CodigosActivacion> codigosActivacionList) {
+        this.codigosActivacionList = codigosActivacionList;
+    }
+
+    @XmlTransient
+    public List<InformacionUsuario> getInformacionUsuarioList() {
+        return informacionUsuarioList;
+    }
+
+    public void setInformacionUsuarioList(List<InformacionUsuario> informacionUsuarioList) {
+        this.informacionUsuarioList = informacionUsuarioList;
+    }
+
+    @XmlTransient
+    public List<UsuarioLog> getUsuarioLogList() {
+        return usuarioLogList;
+    }
+
+    public void setUsuarioLogList(List<UsuarioLog> usuarioLogList) {
+        this.usuarioLogList = usuarioLogList;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (idUsuario != null ? idUsuario.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Usuario)) {
+            return false;
+        }
+        Usuario other = (Usuario) object;
+        if ((this.idUsuario == null && other.idUsuario != null) || (this.idUsuario != null && !this.idUsuario.equals(other.idUsuario))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "com.hubionics.anda.web.entity.Usuario[ idUsuario=" + idUsuario + " ]";
+    }
+
+    @XmlTransient
+    public List<ComprasLog> getComprasLogList() {
+        return comprasLogList;
+    }
+
+    public void setComprasLogList(List<ComprasLog> comprasLogList) {
+        this.comprasLogList = comprasLogList;
+    }
+
+    public Date getUsuarioLastLogin() {
+        return usuarioLastLogin;
+    }
+
+    public void setUsuarioLastLogin(Date usuarioLastLogin) {
+        this.usuarioLastLogin = usuarioLastLogin;
+    }
+
+    @XmlTransient
+    public List<AndaRequirements> getAndaRequirementsList() {
+        return andaRequirementsList;
+    }
+
+    public void setAndaRequirementsList(List<AndaRequirements> andaRequirementsList) {
+        this.andaRequirementsList = andaRequirementsList;
+    }
+
+    @XmlTransient
+    public List<Metricasanda> getMetricasandaList() {
+        return metricasandaList;
+    }
+
+    public void setMetricasandaList(List<Metricasanda> metricasandaList) {
+        this.metricasandaList = metricasandaList;
+    }
+
+    @XmlTransient
+    public List<UsuarioDatosMedicos> getUsuarioDatosMedicosList() {
+        return usuarioDatosMedicosList;
+    }
+
+    public void setUsuarioDatosMedicosList(List<UsuarioDatosMedicos> usuarioDatosMedicosList) {
+        this.usuarioDatosMedicosList = usuarioDatosMedicosList;
+    }
+
+    public String getTokenRecuperarContrasena() {
+        return tokenRecuperarContrasena;
+    }
+
+    public void setTokenRecuperarContrasena(String tokenRecuperarContrasena) {
+        this.tokenRecuperarContrasena = tokenRecuperarContrasena;
+    }
+    
+}
