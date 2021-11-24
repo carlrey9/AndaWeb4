@@ -376,7 +376,7 @@ public class DatabaseManager {
                         }
                         TiempoRestanteVO tiempoRestanteVO = new TiempoRestanteVO();
                         tiempoRestanteVO.setTiempoRestante(tiempoTotalRestante);
-
+                        
                         return new Respuesta.Builder().status(Respuesta.SUCCESS).errorCode(ErroresRespuesta.OK).data(tiempoRestanteVO).build();
                     } else {
 
@@ -414,7 +414,7 @@ public class DatabaseManager {
                     userVO.setIdDevice(usuario.getIdDevice());
             }
             
-            return new Respuesta.Builder().status(Respuesta.SUCCESS).errorCode(ErroresRespuesta.OK).data(userVO).build();
+            return new Respuesta.Builder().status(Respuesta.SUCCESS).errorCode(ErroresRespuesta.OK).data(usuario).build();
       
         } catch (Exception e) {
 
