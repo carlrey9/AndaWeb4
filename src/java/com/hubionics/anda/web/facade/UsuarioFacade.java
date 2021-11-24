@@ -39,6 +39,16 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
             return null;
         }
     }
+    
+    public Usuario findIdDevice(String idDeviceInfoUsuario) {
+        try {
+            Query q = getEntityManager().createQuery("SELECT u FROM Usuario u WHERE u.idDeviceInfoUsuario = :idDevice");
+            q.setParameter("idDevice", idDeviceInfoUsuario);
+            return (Usuario) q.getSingleResult();
+        } catch (Exception e) {
+            return null;
+        }
+    }
 
     public Usuario findByFacebookID(String idFb) {
         try {

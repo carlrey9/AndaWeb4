@@ -402,17 +402,12 @@ public class DatabaseManager {
     
     public Respuesta getIdDevice(UsuarioVO usuarioVO) {
         try {
-            List<Usuario> usuarios = usuarioFacade.findAll();
-            String idDevice = "no devices with this idDevice";
-            if(usuarios != null){
-                for(int i = 0; i < usuarios.size();i++){
-                    Usuario usuarioTemp = usuarios.get(i);
-                    if(usuarioTemp.getIdDevice() == usuarioVO.getIdDevice()){
-                        idDevice = usuarioTemp.getIdDevice();
-                    }   
-            
-                }
+            Usuario usuario = usuarioFacade.findIdDevice(usuarioVO.getIdDevice());
+            String idDevice = "idDevice no register";
+            if(usuario != null){
+                idDevice = usuario.getIdDevice();
             }
+            
             return new Respuesta.Builder().status(Respuesta.SUCCESS).errorCode(ErroresRespuesta.OK).data(idDevice).build();
       
         } catch (Exception e) {
