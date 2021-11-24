@@ -6,6 +6,7 @@
 package com.hubionics.anda.web.facade;
 
 import com.hubionics.anda.web.entity.Usuario;
+import static javafx.scene.input.KeyCode.T;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -42,7 +43,7 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
     
     public Usuario findIdDevice(String idDeviceInfoUsuario) {
         try {
-            Query q = getEntityManager().createQuery("SELECT u FROM Usuario u WHERE u.idDeviceInfoUsuario = :idDevice");
+            Query q = getEntityManager().createQuery("SELECT u FROM Usuario u WHERE u.idDevice = :idDevice");
             q.setParameter("idDevice", idDeviceInfoUsuario);
             return (Usuario) q.getSingleResult();
         } catch (Exception e) {

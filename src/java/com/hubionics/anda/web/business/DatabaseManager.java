@@ -414,7 +414,7 @@ public class DatabaseManager {
                     userVO.setIdDevice(usuario.getIdDevice());
             }
             
-            return new Respuesta.Builder().status(Respuesta.SUCCESS).errorCode(ErroresRespuesta.OK).data(usuario).build();
+            return new Respuesta.Builder().status(Respuesta.SUCCESS).errorCode(ErroresRespuesta.OK).data(userVO).build();
       
         } catch (Exception e) {
 
@@ -804,6 +804,7 @@ public class DatabaseManager {
             return new Respuesta.Builder().status(Respuesta.ERROR)
                     .errorCode(ErroresRespuesta.ENVIAR_MAIL_PRUEBA_ERROR_1)
                     .build();
+            
         }
     }
 
