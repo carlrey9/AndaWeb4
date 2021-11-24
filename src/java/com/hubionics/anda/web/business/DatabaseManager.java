@@ -403,12 +403,18 @@ public class DatabaseManager {
     public Respuesta getIdDevice(UsuarioVO usuarioVO) {
         try {
             Usuario usuario = usuarioFacade.findIdDevice(usuarioVO.getIdDevice());
-            String idDevice = "idDevice no register";
+            UsuarioVO userVO = new UsuarioVO();
             if(usuario != null){
-                idDevice = usuario.getIdDevice();
+                   
+                    userVO.setIdUsuario(usuario.getIdUsuario());
+                    userVO.setUsuarioActivo(usuario.getUsuarioActivo());
+                    userVO.setCorreoConfirmado(usuario.getCorreoConfirmado());
+                    userVO.setEmailInfoUsuario(usuario.getEmailInfoUsuario());
+                    userVO.setIdRolUsuario(usuario.getIdRolUsuario().getIdRolUsuario());
+                    userVO.setIdDevice(usuario.getIdDevice());
             }
             
-            return new Respuesta.Builder().status(Respuesta.SUCCESS).errorCode(ErroresRespuesta.OK).data(idDevice).build();
+            return new Respuesta.Builder().status(Respuesta.SUCCESS).errorCode(ErroresRespuesta.OK).data(userVO).build();
       
         } catch (Exception e) {
 
