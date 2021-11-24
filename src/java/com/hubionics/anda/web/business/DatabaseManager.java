@@ -403,9 +403,10 @@ public class DatabaseManager {
     public Respuesta getIdDevice(UsuarioVO usuarioVO) {
         try {
             Usuario usuario = usuarioFacade.findIdDevice(usuarioVO.getIdDevice());
-            UsuarioVO userVO = new UsuarioVO();
+            UsuarioVO userVO = null;
             if(usuario != null){
-                   
+                
+                    userVO = new UsuarioVO();
                     userVO.setIdUsuario(usuario.getIdUsuario());
                     userVO.setUsuarioActivo(usuario.getUsuarioActivo());
                     userVO.setCorreoConfirmado(usuario.getCorreoConfirmado());
