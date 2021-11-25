@@ -402,20 +402,25 @@ public class DatabaseManager {
     
     public Respuesta getIdDevice(UsuarioVO usuarioVO) {
         try {
-            Usuario usuario = usuarioFacade.findIdDevice(usuarioVO.getIdDevice());
-            UsuarioVO userVO = null;
-            if(usuario != null){
-                
-                    userVO = new UsuarioVO();
-                    userVO.setIdUsuario(usuario.getIdUsuario());
-                    userVO.setUsuarioActivo(usuario.getUsuarioActivo());
-                    userVO.setCorreoConfirmado(usuario.getCorreoConfirmado());
-                    userVO.setEmailInfoUsuario(usuario.getEmailInfoUsuario());
-                    userVO.setIdRolUsuario(usuario.getIdRolUsuario().getIdRolUsuario());
-                    userVO.setIdDevice(usuario.getIdDevice());
+            List<Usuario> usuarios = usuarioFacade.findIdDevice(usuarioVO.getIdDevice());
+            List<UsuarioVO> usersVO = null ;
+            if(usuarios != null){
+              usersVO = new ArrayList<UsuarioVO>();
+                for(int i = 0;i<usuarios.size();i++){
+                    
+                    UsuarioVO userVO = new UsuarioVO();
+                    userVO.setIdUsuario(usuarios.get(i).getIdUsuario());
+                    userVO.setUsuarioActivo(usuarios.get(i).getUsuarioActivo());
+                    userVO.setCorreoConfirmado(usuarios.get(i).getCorreoConfirmado());
+                    userVO.setEmailInfoUsuario(usuarios.get(i).getEmailInfoUsuario());
+                    userVO.setIdRolUsuario(usuarios.get(i).getIdRolUsuario().getIdRolUsuario());
+                    userVO.setIdDevice(usuarios.get(i).getIdDevice());
+                    
+                    usersVO.add(userVO);
+                }
             }
             
-            return new Respuesta.Builder().status(Respuesta.SUCCESS).errorCode(ErroresRespuesta.OK).data(userVO).build();
+            return new Respuesta.Builder().status(Respuesta.SUCCESS).errorCode(ErroresRespuesta.OK).data(usersVO).build();
       
         } catch (Exception e) {
 
