@@ -83,7 +83,7 @@ public class WebService {
             return Util.getError(ErroresRespuesta.NO_AUTENTICADO);
         }
     }
-    
+
     @POST
     @Path("getIdDevice")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -218,10 +218,10 @@ public class WebService {
     @Path("getSonidosKey")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Respuesta getSonidosKey(/*AppVO appVO*/) {
+    public Respuesta getSonidosKey(/* AppVO appVO */) {
 
         if (autenticado) {
-            return databaseManager.getSonidosKey(/*appVO*/);
+            return databaseManager.getSonidosKey(/* appVO */);
         } else {
             return Util.getError(ErroresRespuesta.NO_AUTENTICADO);
         }
@@ -231,10 +231,10 @@ public class WebService {
     @Path("getSubcategoriaSonidos")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Respuesta getSubcategoriasSonidos(/*AppVO appVO*/) {
+    public Respuesta getSubcategoriasSonidos(/* AppVO appVO */) {
 
         if (autenticado) {
-            return databaseManager.getSubcategoriasSonidos(/*appVO*/);
+            return databaseManager.getSubcategoriasSonidos(/* appVO */);
         } else {
             return Util.getError(ErroresRespuesta.NO_AUTENTICADO);
         }
@@ -244,10 +244,10 @@ public class WebService {
     @Path("getTempoSonidos")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Respuesta getTempoSonidos(/*AppVO appVO*/) {
+    public Respuesta getTempoSonidos(/* AppVO appVO */) {
 
         if (autenticado) {
-            return databaseManager.getTempoSonidos(/*appVO*/);
+            return databaseManager.getTempoSonidos(/* appVO */);
         } else {
             return Util.getError(ErroresRespuesta.NO_AUTENTICADO);
         }
@@ -339,6 +339,7 @@ public class WebService {
             return Util.getError(ErroresRespuesta.NO_AUTENTICADO);
         }
     }
+
     @POST
     @Path("getDatosMedicosChart")
     @Consumes(MediaType.APPLICATION_JSON)

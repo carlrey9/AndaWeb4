@@ -27,13 +27,14 @@ public class EnviarMail {
     public EnviarMail() {
     }
 
-    public void sendwithMessage(String asunto,String mensaje,String mail) {
-        final String[] username = {"info@humanbionics.co.uk", "info@hubionics.com"};
-        final String[] nombreAddress = {asunto};
-        final String[] password = {"1204!4nD4$$3rV3r!2018", "albatroZ_500"};
+    public void sendwithMessage(String asunto, String mensaje, String mail) {
+        final String[] username = { "info@humansbionics.co.uk", "info@hubionics.com" };
+        final String[] nombreAddress = { asunto };
+        final String[] password = { "1204!4nD4$$3rV3r!2018", "albatroZ_500" };
 
-        final String[] server = {"smtp.gmail.com","smtp.emailsrvr.com","secure.mailsrvr.com","mail.humanbionics.co.uk"};
-        final String[] port = {"587","25","465","8025"};
+        final String[] server = { "smtp.gmail.com", "smtp.emailsrvr.com", "secure.mailsrvr.com",
+                "mail.humansbionics.co.uk" };
+        final String[] port = { "587", "25", "465", "8025" };
 
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
@@ -51,7 +52,7 @@ public class EnviarMail {
         try {
 
             Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress(username[1],nombreAddress[0]));
+            message.setFrom(new InternetAddress(username[1], nombreAddress[0]));
             message.setRecipients(Message.RecipientType.TO,
                     InternetAddress.parse(mail));
             message.setSubject(asunto);

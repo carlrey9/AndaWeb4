@@ -151,7 +151,6 @@ public class DatabaseManager {
         try {
             Usuario u = usuarioFacade.find(metricsVO.getUserID());
 
-            
             if (u != null) {
                 Metricasanda metricasanda = new Metricasanda();
                 metricasanda.setDescripcionMetrica(metricsVO.getMetricDescription());
@@ -160,7 +159,8 @@ public class DatabaseManager {
                 metricasanda.setTipoMetrica(metricsVO.getMetricType());
                 metricasandaFacade.create(metricasanda);
 
-                return new Respuesta.Builder().status(Respuesta.SUCCESS).errorCode(ErroresRespuesta.OK).data("").build();
+                return new Respuesta.Builder().status(Respuesta.SUCCESS).errorCode(ErroresRespuesta.OK).data("")
+                        .build();
             } else {
                 return Util.getError(ErroresRespuesta.SAVE_METRICS_ERROR_2);
             }
@@ -168,7 +168,6 @@ public class DatabaseManager {
             return Util.getError(ErroresRespuesta.SAVE_METRICS_ERROR_1);
         }
     }
-    
 
     public Respuesta getSonidos() {
 
@@ -188,7 +187,8 @@ public class DatabaseManager {
 
                 sonidoVOs.add(sonidoVO);
             }
-            return new Respuesta.Builder().status(Respuesta.SUCCESS).errorCode(ErroresRespuesta.OK).data(sonidoVOs).build();
+            return new Respuesta.Builder().status(Respuesta.SUCCESS).errorCode(ErroresRespuesta.OK).data(sonidoVOs)
+                    .build();
         } catch (Exception e) {
             return Util.getError(ErroresRespuesta.LISTA_SONIDOS_ERROR);
         }
@@ -207,7 +207,8 @@ public class DatabaseManager {
 
                 subCategoriaSonidoVOs.add(subCategoriaSonidoVO);
             }
-            return new Respuesta.Builder().status(Respuesta.SUCCESS).errorCode(ErroresRespuesta.OK).data(subCategoriaSonidoVOs).build();
+            return new Respuesta.Builder().status(Respuesta.SUCCESS).errorCode(ErroresRespuesta.OK)
+                    .data(subCategoriaSonidoVOs).build();
         } catch (Exception e) {
             return Util.getError(ErroresRespuesta.LISTA_SUBCATEGORIA_ERROR);
         }
@@ -226,7 +227,8 @@ public class DatabaseManager {
 
                 tempoSonidoVOs.add(tempoSonidoVO);
             }
-            return new Respuesta.Builder().status(Respuesta.SUCCESS).errorCode(ErroresRespuesta.OK).data(tempoSonidoVOs).build();
+            return new Respuesta.Builder().status(Respuesta.SUCCESS).errorCode(ErroresRespuesta.OK).data(tempoSonidoVOs)
+                    .build();
         } catch (Exception e) {
             return Util.getError(ErroresRespuesta.LISTA_TEMPOS_ERROR);
         }
@@ -241,7 +243,8 @@ public class DatabaseManager {
             } else {
                 Usuario usuario = new Usuario();
 
-                if (usuarioVO.getPasswdUsuario() != null && usuarioVO.getPasswdUsuario().length() <= 25) {//TODO REMOVE COLLINS
+                if (usuarioVO.getPasswdUsuario() != null && usuarioVO.getPasswdUsuario().length() <= 25) {// TODO REMOVE
+                                                                                                          // COLLINS
                     usuarioVO.setPasswdUsuario(HashEncryption.getHashedTry2(usuarioVO.getPasswdUsuario()));
                 }
                 usuario.setPasswdUsuario(usuarioVO.getPasswdUsuario());
@@ -249,17 +252,17 @@ public class DatabaseManager {
                 usuario.setTokenConfirmarCorreo(tokenCorreo);
                 if (usuarioVO.getFacebookuserID() != null) {
                     usuario.setFacebookuserID(usuarioVO.getFacebookuserID());
-                    usuario.setCorreoConfirmado(1);//TODO CONFIRMAR CORREO DESPUES DE IR AL LINK
+                    usuario.setCorreoConfirmado(1);// TODO CONFIRMAR CORREO DESPUES DE IR AL LINK
                 } else {
 
-                    usuario.setCorreoConfirmado(0);//TODO CONFIRMAR CORREO DESPUES DE IR AL LINK
+                    usuario.setCorreoConfirmado(0);// TODO CONFIRMAR CORREO DESPUES DE IR AL LINK
                 }
 
                 usuario.setIdRolUsuario(rolUsuarioFacade.find(3)); // ROL USUARIO por defecto
                 usuario.setUsuarioActivo(1); // USUARIO ACTIVO
                 usuario.setEmailInfoUsuario(usuarioVO.getEmailInfoUsuario());
                 usuario.setIdDevice(usuarioVO.getIdDevice());
-                
+
                 usuario.setFechaCreacionUsuario(new Date());
 
                 usuarioFacade.create(usuario);
@@ -273,7 +276,7 @@ public class DatabaseManager {
                 informacionUsuarioFacade.create(informacionUsuario);
 
                 UsuarioPaquete usuarioPaquete = new UsuarioPaquete();
-                Paquete paquete = paqueteFacade.find(2); //PAQUETE ESTANDAR PARA REGISTRO
+                Paquete paquete = paqueteFacade.find(2); // PAQUETE ESTANDAR PARA REGISTRO
                 usuarioPaquete.setVigenciaPaquete(paquete.getVigenciaPaquete());
                 usuarioPaquete.setIdPaquete(paquete);
                 usuarioPaquete.setIdUsuario(usuario);
@@ -282,15 +285,19 @@ public class DatabaseManager {
                 usuarioPaqueteFacade.create(usuarioPaquete);
 
                 if (usuarioVO.getFacebookuserID() == null) {
-                    String correoContenido = "<img src=\"https://www.humanbionics.co.uk:55411/AndaWeb4/resources/img/headcorreo.png\"/>"
+                    String correoContenido = "<img src=\"https://www.humansbionics.co.uk:55411/AndaWeb4/resources/img/headcorreo.png\"/>"
                             + "<br/><br/><h1>Bienvenido a ANDA</h1>"
                             + "<br/><br/><h2> Gracias por registrarte.</h2>"
                             + "<br/><br/> Sigue este link para activar tu cuenta:"
-                            + "<br/> <a href=\"https://www.humanbionics.co.uk:55411/AndaWeb4/activarCuenta.jsp?t=" + tokenCorreo + "\">https://www.humanbionics.co.uk:55411/AndaWeb4/activarCuenta.jsp?t=" + tokenCorreo + "</a>"
+                            + "<br/> <a href=\"https://www.humansbionics.co.uk:55411/AndaWeb4/activarCuenta.jsp?t="
+                            + tokenCorreo + "\">https://www.humansbionics.co.uk:55411/AndaWeb4/activarCuenta.jsp?t="
+                            + tokenCorreo + "</a>"
                             + "<br/><br/> Si no puedes visitar el link copia y pega este texto en el navegador."
-                            + "<br/>https://www.humanbionics.co.uk:55411/AndaWeb4/api/v1/activarCuenta.jsp?t=" + tokenCorreo + ""
-                            + "<br/><br/><img src=\"https://www.humanbionics.co.uk:55411/AndaWeb4/resources/img/piefirmacorreo.png\"/>";
-                    new EnviarMail().sendwithMessage("Registro: Nuevo Usuario", correoContenido, usuarioVO.getEmailInfoUsuario());
+                            + "<br/>https://www.humansbionics.co.uk:55411/AndaWeb4/api/v1/activarCuenta.jsp?t="
+                            + tokenCorreo + ""
+                            + "<br/><br/><img src=\"https://www.humansbionics.co.uk:55411/AndaWeb4/resources/img/piefirmacorreo.png\"/>";
+                    new EnviarMail().sendwithMessage("Registro: Nuevo Usuario", correoContenido,
+                            usuarioVO.getEmailInfoUsuario());
                 }
                 SendNotification.newUserRegistered();
                 return new Respuesta.Builder().status(Respuesta.SUCCESS)
@@ -305,16 +312,18 @@ public class DatabaseManager {
         }
     }
 
-        public Respuesta autenticarUsuario(UsuarioVO usuarioVO) {
+    public Respuesta autenticarUsuario(UsuarioVO usuarioVO) {
         try {
             Usuario usuario = usuarioFacade.findCorreoElectronico(usuarioVO.getEmailInfoUsuario());
 
             if (usuario != null) {
-                if (usuarioVO.getPasswdUsuario() != null && usuarioVO.getPasswdUsuario().length() <= 25) {//TODO REMOVE COLLINS
+                if (usuarioVO.getPasswdUsuario() != null && usuarioVO.getPasswdUsuario().length() <= 25) {// TODO REMOVE
+                                                                                                          // COLLINS
                     usuarioVO.setPasswdUsuario(HashEncryption.getHashedTry2(usuarioVO.getPasswdUsuario()));
                 }
 
-                if (usuarioVO.getPasswdUsuario() != null && usuarioVO.getPasswdUsuario().equals(usuario.getPasswdUsuario())) {
+                if (usuarioVO.getPasswdUsuario() != null
+                        && usuarioVO.getPasswdUsuario().equals(usuario.getPasswdUsuario())) {
                     UsuarioVO usuarioVO1 = new UsuarioVO();
                     usuarioVO1.setIdUsuario(usuario.getIdUsuario());
                     usuarioVO1.setUsuarioActivo(usuario.getUsuarioActivo());
@@ -322,13 +331,17 @@ public class DatabaseManager {
                     usuarioVO1.setEmailInfoUsuario(usuario.getEmailInfoUsuario());
                     usuarioVO1.setIdRolUsuario(usuario.getIdRolUsuario().getIdRolUsuario());
 
-                    /* UsuarioLog usuarioLog = new UsuarioLog();
-                    usuarioLog.setConceptoUsuarioLog("Usuario Inicio Sesion");
-                    usuarioLog.setIdUsuarioFk(usuario);
-                    usuarioLog.setDateEventoUsuarioLog(new Date());
-                    usuarioLogFacade.create(usuarioLog);*/
-                    return new Respuesta.Builder().status(Respuesta.SUCCESS).errorCode(ErroresRespuesta.OK).data(usuarioVO1).build();
-                } else if (usuarioVO.getFacebookuserID() != null && usuario.getFacebookuserID().equals(usuarioVO.getFacebookuserID())) {
+                    /*
+                     * UsuarioLog usuarioLog = new UsuarioLog();
+                     * usuarioLog.setConceptoUsuarioLog("Usuario Inicio Sesion");
+                     * usuarioLog.setIdUsuarioFk(usuario);
+                     * usuarioLog.setDateEventoUsuarioLog(new Date());
+                     * usuarioLogFacade.create(usuarioLog);
+                     */
+                    return new Respuesta.Builder().status(Respuesta.SUCCESS).errorCode(ErroresRespuesta.OK)
+                            .data(usuarioVO1).build();
+                } else if (usuarioVO.getFacebookuserID() != null
+                        && usuario.getFacebookuserID().equals(usuarioVO.getFacebookuserID())) {
                     UsuarioVO usuarioVO1 = new UsuarioVO();
                     usuarioVO1.setIdUsuario(usuario.getIdUsuario());
                     usuarioVO1.setUsuarioActivo(usuario.getUsuarioActivo());
@@ -336,12 +349,15 @@ public class DatabaseManager {
                     usuarioVO1.setCorreoConfirmado(usuario.getCorreoConfirmado());
                     usuarioVO1.setEmailInfoUsuario(usuario.getEmailInfoUsuario());
 
-                    /* UsuarioLog usuarioLog = new UsuarioLog();
-                    usuarioLog.setConceptoUsuarioLog("Usuario Inicio Sesion con facebook");
-                    usuarioLog.setIdUsuarioFk(usuario);
-                    usuarioLog.setDateEventoUsuarioLog(new Date());
-                    usuarioLogFacade.create(usuarioLog);*/
-                    return new Respuesta.Builder().status(Respuesta.SUCCESS).errorCode(ErroresRespuesta.OK).data(usuarioVO1).build();
+                    /*
+                     * UsuarioLog usuarioLog = new UsuarioLog();
+                     * usuarioLog.setConceptoUsuarioLog("Usuario Inicio Sesion con facebook");
+                     * usuarioLog.setIdUsuarioFk(usuario);
+                     * usuarioLog.setDateEventoUsuarioLog(new Date());
+                     * usuarioLogFacade.create(usuarioLog);
+                     */
+                    return new Respuesta.Builder().status(Respuesta.SUCCESS).errorCode(ErroresRespuesta.OK)
+                            .data(usuarioVO1).build();
                 } else {
                     return Util.getError(ErroresRespuesta.AUTENTICACION_ERROR_3);
                 }
@@ -368,7 +384,8 @@ public class DatabaseManager {
                         for (UsuarioPaquete usuarioPaquete : usuarioPaquetes) {
                             Date dateUltimoPago = usuarioPaquete.getUltimoPago();
                             long diff = dateHoy.getTime() - dateUltimoPago.getTime();
-                            long tiempoRestante = usuarioPaquete.getVigenciaPaquete() - TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
+                            long tiempoRestante = usuarioPaquete.getVigenciaPaquete()
+                                    - TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
 
                             if (tiempoRestante > 0) {
                                 tiempoTotalRestante += tiempoRestante;
@@ -376,8 +393,9 @@ public class DatabaseManager {
                         }
                         TiempoRestanteVO tiempoRestanteVO = new TiempoRestanteVO();
                         tiempoRestanteVO.setTiempoRestante(tiempoTotalRestante);
-                        
-                        return new Respuesta.Builder().status(Respuesta.SUCCESS).errorCode(ErroresRespuesta.OK).data(tiempoRestanteVO).build();
+
+                        return new Respuesta.Builder().status(Respuesta.SUCCESS).errorCode(ErroresRespuesta.OK)
+                                .data(tiempoRestanteVO).build();
                     } else {
 
                         return Util.getError(ErroresRespuesta.GET_VIGENCIA_PAQUETE_ERROR_4);
@@ -399,15 +417,15 @@ public class DatabaseManager {
                     .build();
         }
     }
-    
+
     public Respuesta getIdDevice(UsuarioVO usuarioVO) {
         try {
             List<Usuario> usuarios = usuarioFacade.findIdDevice(usuarioVO.getIdDevice());
-            List<UsuarioVO> usersVO = null ;
-            if(usuarios != null){
-              usersVO = new ArrayList<UsuarioVO>();
-                for(int i = 0;i<usuarios.size();i++){
-                    
+            List<UsuarioVO> usersVO = null;
+            if (usuarios != null) {
+                usersVO = new ArrayList<UsuarioVO>();
+                for (int i = 0; i < usuarios.size(); i++) {
+
                     UsuarioVO userVO = new UsuarioVO();
                     userVO.setIdUsuario(usuarios.get(i).getIdUsuario());
                     userVO.setUsuarioActivo(usuarios.get(i).getUsuarioActivo());
@@ -415,13 +433,14 @@ public class DatabaseManager {
                     userVO.setEmailInfoUsuario(usuarios.get(i).getEmailInfoUsuario());
                     userVO.setIdRolUsuario(usuarios.get(i).getIdRolUsuario().getIdRolUsuario());
                     userVO.setIdDevice(usuarios.get(i).getIdDevice());
-                    
+
                     usersVO.add(userVO);
                 }
             }
-            
-            return new Respuesta.Builder().status(Respuesta.SUCCESS).errorCode(ErroresRespuesta.OK).data(usersVO).build();
-      
+
+            return new Respuesta.Builder().status(Respuesta.SUCCESS).errorCode(ErroresRespuesta.OK).data(usersVO)
+                    .build();
+
         } catch (Exception e) {
 
             return new Respuesta.Builder().status(Respuesta.ERROR)
@@ -429,7 +448,7 @@ public class DatabaseManager {
                     .build();
         }
     }
-    
+
     public Respuesta getVersionApp() {
         try {
             List<Appdata> appdatas = appdataFacade.findAll();
@@ -441,7 +460,8 @@ public class DatabaseManager {
                 appdataVOs.add(appdataVO);
             }
 
-            return new Respuesta.Builder().status(Respuesta.SUCCESS).errorCode(ErroresRespuesta.OK).data(appdataVOs).build();
+            return new Respuesta.Builder().status(Respuesta.SUCCESS).errorCode(ErroresRespuesta.OK).data(appdataVOs)
+                    .build();
 
         } catch (Exception e) {
             return new Respuesta.Builder().status(Respuesta.ERROR)
@@ -453,7 +473,7 @@ public class DatabaseManager {
     public Respuesta getVersionAppV2() {
         try {
 
-            Appdata appdata = appdataFacade.find(1); //Default appdata
+            Appdata appdata = appdataFacade.find(1); // Default appdata
 
             AppdataVO appdataVO = new AppdataVO();
             appdataVO.setIdappData(appdata.getIdappData());
@@ -461,7 +481,8 @@ public class DatabaseManager {
             appdataVO.setVersionappDataDev(appdata.getVersionappDataDev());
             appdataVO.setVersionappDatabeta(appdata.getVersionappDatabeta());
 
-            return new Respuesta.Builder().status(Respuesta.SUCCESS).errorCode(ErroresRespuesta.OK).data(appdataVO).build();
+            return new Respuesta.Builder().status(Respuesta.SUCCESS).errorCode(ErroresRespuesta.OK).data(appdataVO)
+                    .build();
         } catch (Exception e) {
             return new Respuesta.Builder().status(Respuesta.ERROR)
                     .errorCode(ErroresRespuesta.GET_VERSION_APP_ERROR)
@@ -473,7 +494,8 @@ public class DatabaseManager {
 
         try {
 
-            CodigosActivacion codigosActivacion = codigosActivacionFacade.findByCodigoActivacion(codigosActivacionVO.getCodigoActivacion());
+            CodigosActivacion codigosActivacion = codigosActivacionFacade
+                    .findByCodigoActivacion(codigosActivacionVO.getCodigoActivacion());
 
             if (codigosActivacion != null) {
 
@@ -498,12 +520,14 @@ public class DatabaseManager {
                             codigosActivacionFacade.edit(codigosActivacion);
 
                             UsuarioLog usuarioLog = new UsuarioLog();
-                            usuarioLog.setConceptoUsuarioLog("Usuario registro codigo " + codigosActivacionVO.getCodigoActivacion());
+                            usuarioLog.setConceptoUsuarioLog(
+                                    "Usuario registro codigo " + codigosActivacionVO.getCodigoActivacion());
                             usuarioLog.setIdUsuarioFk(u);
                             usuarioLog.setDateEventoUsuarioLog(new Date());
                             usuarioLogFacade.create(usuarioLog);
 
-                            return new Respuesta.Builder().status(Respuesta.SUCCESS).errorCode(ErroresRespuesta.OK).data("").build();
+                            return new Respuesta.Builder().status(Respuesta.SUCCESS).errorCode(ErroresRespuesta.OK)
+                                    .data("").build();
                         } else {
                             return Util.getError(ErroresRespuesta.CODIGOACT_ERROR_5);
                         }
@@ -563,7 +587,8 @@ public class DatabaseManager {
                         for (UsuarioPaquete usuarioPaquete : usuarioPaquetes) {
                             Date dateUltimoPago = usuarioPaquete.getUltimoPago();
                             long diff = dateHoy.getTime() - dateUltimoPago.getTime();
-                            long tiempoRestante = usuarioPaquete.getVigenciaPaquete() - TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
+                            long tiempoRestante = usuarioPaquete.getVigenciaPaquete()
+                                    - TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
 
                             if (tiempoRestante > 0) {
                                 tiempoTotalRestante += tiempoRestante;
@@ -574,7 +599,8 @@ public class DatabaseManager {
                         informacionUsuarioVO.setFechaLimitePaquete(0);
                     }
 
-                    return new Respuesta.Builder().status(Respuesta.SUCCESS).errorCode(ErroresRespuesta.OK).data(informacionUsuarioVO).build();
+                    return new Respuesta.Builder().status(Respuesta.SUCCESS).errorCode(ErroresRespuesta.OK)
+                            .data(informacionUsuarioVO).build();
                 } else {
                     return Util.getError(ErroresRespuesta.INFOUSUARIO_ERROR_3);
                 }
@@ -629,43 +655,51 @@ public class DatabaseManager {
                     InformacionUsuario iuReturn = informacionUsuarioFacade.findByIdUsuario(u);
                     if (iuReturn != null) {
                         /*
-                        InformacionUsuarioVO informacionUsuarioVOReturn = new InformacionUsuarioVO();
-
-                        informacionUsuarioVOReturn.setNombresInfoUsuario(iuReturn.getNombresInfoUsuario());
-                        informacionUsuarioVOReturn.setApellidosInfoUsuario(iuReturn.getApellidosInfoUsuario());
-                        if (iuReturn.getFechaNacInfoUsuario() != null) {
-                            DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
-                            String s = formatter.format(iuReturn.getFechaNacInfoUsuario());
-                            informacionUsuarioVOReturn.setFechaNacInfoUsuario(s);
-                        } else {
-                            informacionUsuarioVOReturn.setFechaNacInfoUsuario(null);
-                        }
-                        informacionUsuarioVOReturn.setPaisInfoUsuario(iuReturn.getPaisInfoUsuario());
-                        informacionUsuarioVOReturn.setDptoInfoUsuario(iuReturn.getDptoInfoUsuario());
-                        informacionUsuarioVOReturn.setCiudadInfoUsuario(iuReturn.getCiudadInfoUsuario());
-                        informacionUsuarioVOReturn.setDireccionInfoUsuario(iuReturn.getDireccionInfoUsuario());
-                        informacionUsuarioVOReturn.setTelefonoInfoUsuario(iuReturn.getTelefonoInfoUsuario());
-                        informacionUsuarioVOReturn.setGeneroInfoUsuario(iuReturn.getGeneroInfoUsuario());
-                        informacionUsuarioVOReturn.setCorreoElectronico(u.getEmailInfoUsuario());
-                        informacionUsuarioVOReturn.setIdUsuario(u.getIdUsuario());
-
-                        List<UsuarioPaquete> usuarioPaquetes = u.getUsuarioPaqueteList();
-                        if (usuarioPaquetes != null && !usuarioPaquetes.isEmpty()) {
-                            Date dateHoy = new Date();
-                            long tiempoTotalRestante = 0;
-                            for (UsuarioPaquete usuarioPaquete : usuarioPaquetes) {
-                                Date dateUltimoPago = usuarioPaquete.getUltimoPago();
-                                long diff = dateHoy.getTime() - dateUltimoPago.getTime();
-                                long tiempoRestante = usuarioPaquete.getVigenciaPaquete() - TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
-
-                                if (tiempoRestante > 0) {
-                                    tiempoTotalRestante += tiempoRestante;
-                                }
-                            }
-                            informacionUsuarioVOReturn.setFechaLimitePaquete(tiempoTotalRestante);
-                        } else {
-                            informacionUsuarioVOReturn.setFechaLimitePaquete(0);
-                        }*/
+                         * InformacionUsuarioVO informacionUsuarioVOReturn = new InformacionUsuarioVO();
+                         * 
+                         * informacionUsuarioVOReturn.setNombresInfoUsuario(iuReturn.
+                         * getNombresInfoUsuario());
+                         * informacionUsuarioVOReturn.setApellidosInfoUsuario(iuReturn.
+                         * getApellidosInfoUsuario());
+                         * if (iuReturn.getFechaNacInfoUsuario() != null) {
+                         * DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
+                         * String s = formatter.format(iuReturn.getFechaNacInfoUsuario());
+                         * informacionUsuarioVOReturn.setFechaNacInfoUsuario(s);
+                         * } else {
+                         * informacionUsuarioVOReturn.setFechaNacInfoUsuario(null);
+                         * }
+                         * informacionUsuarioVOReturn.setPaisInfoUsuario(iuReturn.getPaisInfoUsuario());
+                         * informacionUsuarioVOReturn.setDptoInfoUsuario(iuReturn.getDptoInfoUsuario());
+                         * informacionUsuarioVOReturn.setCiudadInfoUsuario(iuReturn.getCiudadInfoUsuario
+                         * ());
+                         * informacionUsuarioVOReturn.setDireccionInfoUsuario(iuReturn.
+                         * getDireccionInfoUsuario());
+                         * informacionUsuarioVOReturn.setTelefonoInfoUsuario(iuReturn.
+                         * getTelefonoInfoUsuario());
+                         * informacionUsuarioVOReturn.setGeneroInfoUsuario(iuReturn.getGeneroInfoUsuario
+                         * ());
+                         * informacionUsuarioVOReturn.setCorreoElectronico(u.getEmailInfoUsuario());
+                         * informacionUsuarioVOReturn.setIdUsuario(u.getIdUsuario());
+                         * 
+                         * List<UsuarioPaquete> usuarioPaquetes = u.getUsuarioPaqueteList();
+                         * if (usuarioPaquetes != null && !usuarioPaquetes.isEmpty()) {
+                         * Date dateHoy = new Date();
+                         * long tiempoTotalRestante = 0;
+                         * for (UsuarioPaquete usuarioPaquete : usuarioPaquetes) {
+                         * Date dateUltimoPago = usuarioPaquete.getUltimoPago();
+                         * long diff = dateHoy.getTime() - dateUltimoPago.getTime();
+                         * long tiempoRestante = usuarioPaquete.getVigenciaPaquete() -
+                         * TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
+                         * 
+                         * if (tiempoRestante > 0) {
+                         * tiempoTotalRestante += tiempoRestante;
+                         * }
+                         * }
+                         * informacionUsuarioVOReturn.setFechaLimitePaquete(tiempoTotalRestante);
+                         * } else {
+                         * informacionUsuarioVOReturn.setFechaLimitePaquete(0);
+                         * }
+                         */
                         UsuarioVO usuVO = new UsuarioVO();
                         usuVO.setIdUsuario(informacionUsuarioVO.getIdUsuario());
                         return getInfoUsuario(usuVO);
@@ -696,44 +730,53 @@ public class DatabaseManager {
 
                     InformacionUsuario iuReturn = informacionUsuarioFacade.findByIdUsuario(u);
                     if (iuReturn != null) {
-                        /*  InformacionUsuarioVO informacionUsuarioVOReturn = new InformacionUsuarioVO();
-
-                        informacionUsuarioVOReturn.setNombresInfoUsuario(iuReturn.getNombresInfoUsuario());
-                        informacionUsuarioVOReturn.setApellidosInfoUsuario(iuReturn.getApellidosInfoUsuario());
-
-                        if (iuReturn.getFechaNacInfoUsuario() != null) {
-                            DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
-                            String s = formatter.format(iuReturn.getFechaNacInfoUsuario());
-                            informacionUsuarioVOReturn.setFechaNacInfoUsuario(s);
-                        } else {
-                            informacionUsuarioVOReturn.setFechaNacInfoUsuario(null);
-                        }
-                        informacionUsuarioVOReturn.setPaisInfoUsuario(iuReturn.getPaisInfoUsuario());
-                        informacionUsuarioVOReturn.setDptoInfoUsuario(iuReturn.getDptoInfoUsuario());
-                        informacionUsuarioVOReturn.setCiudadInfoUsuario(iuReturn.getCiudadInfoUsuario());
-                        informacionUsuarioVOReturn.setDireccionInfoUsuario(iuReturn.getDireccionInfoUsuario());
-                        informacionUsuarioVOReturn.setTelefonoInfoUsuario(iuReturn.getTelefonoInfoUsuario());
-                        informacionUsuarioVOReturn.setGeneroInfoUsuario(iuReturn.getGeneroInfoUsuario());
-                        informacionUsuarioVOReturn.setCorreoElectronico(u.getEmailInfoUsuario());
-                        informacionUsuarioVOReturn.setIdUsuario(u.getIdUsuario());
-
-                        List<UsuarioPaquete> usuarioPaquetes = u.getUsuarioPaqueteList();
-                        if (usuarioPaquetes != null && !usuarioPaquetes.isEmpty()) {
-                            Date dateHoy = new Date();
-                            long tiempoTotalRestante = 0;
-                            for (UsuarioPaquete usuarioPaquete : usuarioPaquetes) {
-                                Date dateUltimoPago = usuarioPaquete.getUltimoPago();
-                                long diff = dateHoy.getTime() - dateUltimoPago.getTime();
-                                long tiempoRestante = usuarioPaquete.getVigenciaPaquete() - TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
-
-                                if (tiempoRestante > 0) {
-                                    tiempoTotalRestante += tiempoRestante;
-                                }
-                            }
-                            informacionUsuarioVOReturn.setFechaLimitePaquete(tiempoTotalRestante);
-                        } else {
-                            informacionUsuarioVOReturn.setFechaLimitePaquete(0);
-                        }*/
+                        /*
+                         * InformacionUsuarioVO informacionUsuarioVOReturn = new InformacionUsuarioVO();
+                         * 
+                         * informacionUsuarioVOReturn.setNombresInfoUsuario(iuReturn.
+                         * getNombresInfoUsuario());
+                         * informacionUsuarioVOReturn.setApellidosInfoUsuario(iuReturn.
+                         * getApellidosInfoUsuario());
+                         * 
+                         * if (iuReturn.getFechaNacInfoUsuario() != null) {
+                         * DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
+                         * String s = formatter.format(iuReturn.getFechaNacInfoUsuario());
+                         * informacionUsuarioVOReturn.setFechaNacInfoUsuario(s);
+                         * } else {
+                         * informacionUsuarioVOReturn.setFechaNacInfoUsuario(null);
+                         * }
+                         * informacionUsuarioVOReturn.setPaisInfoUsuario(iuReturn.getPaisInfoUsuario());
+                         * informacionUsuarioVOReturn.setDptoInfoUsuario(iuReturn.getDptoInfoUsuario());
+                         * informacionUsuarioVOReturn.setCiudadInfoUsuario(iuReturn.getCiudadInfoUsuario
+                         * ());
+                         * informacionUsuarioVOReturn.setDireccionInfoUsuario(iuReturn.
+                         * getDireccionInfoUsuario());
+                         * informacionUsuarioVOReturn.setTelefonoInfoUsuario(iuReturn.
+                         * getTelefonoInfoUsuario());
+                         * informacionUsuarioVOReturn.setGeneroInfoUsuario(iuReturn.getGeneroInfoUsuario
+                         * ());
+                         * informacionUsuarioVOReturn.setCorreoElectronico(u.getEmailInfoUsuario());
+                         * informacionUsuarioVOReturn.setIdUsuario(u.getIdUsuario());
+                         * 
+                         * List<UsuarioPaquete> usuarioPaquetes = u.getUsuarioPaqueteList();
+                         * if (usuarioPaquetes != null && !usuarioPaquetes.isEmpty()) {
+                         * Date dateHoy = new Date();
+                         * long tiempoTotalRestante = 0;
+                         * for (UsuarioPaquete usuarioPaquete : usuarioPaquetes) {
+                         * Date dateUltimoPago = usuarioPaquete.getUltimoPago();
+                         * long diff = dateHoy.getTime() - dateUltimoPago.getTime();
+                         * long tiempoRestante = usuarioPaquete.getVigenciaPaquete() -
+                         * TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
+                         * 
+                         * if (tiempoRestante > 0) {
+                         * tiempoTotalRestante += tiempoRestante;
+                         * }
+                         * }
+                         * informacionUsuarioVOReturn.setFechaLimitePaquete(tiempoTotalRestante);
+                         * } else {
+                         * informacionUsuarioVOReturn.setFechaLimitePaquete(0);
+                         * }
+                         */
 
                         UsuarioVO usuVO = new UsuarioVO();
                         usuVO.setIdUsuario(informacionUsuarioVO.getIdUsuario());
@@ -759,7 +802,8 @@ public class DatabaseManager {
         try {
             Usuario usuario = usuarioFacade.find(usuarioCodesVO.getIdUsuario());
 
-            if (usuario != null && usuario.getIdRolUsuario().getIdRolUsuario() < 3 && usuario.getIdRolUsuario().getIdRolUsuario() != 2) {
+            if (usuario != null && usuario.getIdRolUsuario().getIdRolUsuario() < 3
+                    && usuario.getIdRolUsuario().getIdRolUsuario() != 2) {
 
                 int cant = usuarioCodesVO.getCantidad();
                 int tamanoString = usuarioCodesVO.getTamanoStringAGenerar();
@@ -780,7 +824,8 @@ public class DatabaseManager {
                     ca.setCodigoIsRedeemed(0);
                     codigosActivacionFacade.create(ca);
                 }
-                return new Respuesta.Builder().status(Respuesta.SUCCESS).errorCode(ErroresRespuesta.OK).data("").build();
+                return new Respuesta.Builder().status(Respuesta.SUCCESS).errorCode(ErroresRespuesta.OK).data("")
+                        .build();
             } else {
                 return Util.getError(ErroresRespuesta.CREARCODES_ERROR_2);
             }
@@ -795,22 +840,25 @@ public class DatabaseManager {
     public Respuesta enviarMailPrueba() {
 
         try {
-            /*        List<Usuario> usuarios = usuarioFacade.findAll();
-            Date date = new Date();
-            for (Usuario usuario : usuarios) {
-                UsuarioPaquete up = new UsuarioPaquete();
-                up.setIdPaquete(paqueteFacade.find(2));
-                up.setIdUsuario(usuario);
-                up.setVigenciaPaquete(2);
-                up.setUltimoPago(date);
-                usuarioPaqueteFacade.create(up);
-            }*/
-            return new Respuesta.Builder().status(Respuesta.SUCCESS).errorCode(ErroresRespuesta.OK).data("SUCCESS!").build();
+            /*
+             * List<Usuario> usuarios = usuarioFacade.findAll();
+             * Date date = new Date();
+             * for (Usuario usuario : usuarios) {
+             * UsuarioPaquete up = new UsuarioPaquete();
+             * up.setIdPaquete(paqueteFacade.find(2));
+             * up.setIdUsuario(usuario);
+             * up.setVigenciaPaquete(2);
+             * up.setUltimoPago(date);
+             * usuarioPaqueteFacade.create(up);
+             * }
+             */
+            return new Respuesta.Builder().status(Respuesta.SUCCESS).errorCode(ErroresRespuesta.OK).data("SUCCESS!")
+                    .build();
         } catch (Exception e) {
             return new Respuesta.Builder().status(Respuesta.ERROR)
                     .errorCode(ErroresRespuesta.ENVIAR_MAIL_PRUEBA_ERROR_1)
                     .build();
-            
+
         }
     }
 
@@ -824,13 +872,13 @@ public class DatabaseManager {
                     usuarioFacade.edit(usuario);
                     return 3; // Usuario Activado Correctamente.
                 } else {
-                    return 2; //Usuario ya activo correo
+                    return 2; // Usuario ya activo correo
                 }
             } else {
-                return 1; //Token no figura
+                return 1; // Token no figura
             }
         } catch (Exception e) {
-            return 0; //Error general
+            return 0; // Error general
         }
 
     }
@@ -841,16 +889,21 @@ public class DatabaseManager {
 
             if (u != null) {
                 String tokenCorreo = u.getTokenConfirmarCorreo();
-                String correoContenido = "<img src=\"https://www.humanbionics.co.uk:55411/AndaWeb4/resources/img/headcorreo.png\"/>"
+                String correoContenido = "<img src=\"https://www.humansbionics.co.uk:55411/AndaWeb4/resources/img/headcorreo.png\"/>"
                         + "<br/><br/><h1>Bienvenido a ANDA</h1>"
                         + "<br/><br/><h2> Gracias por registrarte.</h2>"
                         + "<br/><br/> Sigue este link para activar tu cuenta:"
-                        + "<br/> <a href=\"https://www.humanbionics.co.uk:55411/AndaWeb4/activarCuenta.jsp?t=" + tokenCorreo + "\">https://www.humanbionics.co.uk:55411/AndaWeb4/activarCuenta.jsp?t=" + tokenCorreo + "</a>"
+                        + "<br/> <a href=\"https://www.humansbionics.co.uk:55411/AndaWeb4/activarCuenta.jsp?t="
+                        + tokenCorreo + "\">https://www.humansbionics.co.uk:55411/AndaWeb4/activarCuenta.jsp?t="
+                        + tokenCorreo + "</a>"
                         + "<br/><br/> Si no puedes visitar el link copia y pega este texto en el navegador."
-                        + "<br/><p style=\"font-size: 10px;\">https://www.humanbionics.co.uk:55411/AndaWeb4/api/v1/activarCuenta.jsp?t=" + tokenCorreo + "</p>"
-                        + "<br/><br/><img src=\"https://www.humanbionics.co.uk:55411/AndaWeb4/resources/img/piefirmacorreo.png\"/>";
-                new EnviarMail().sendwithMessage("Reenvio de correo: Verificacion", correoContenido, u.getEmailInfoUsuario());
-                return new Respuesta.Builder().status(Respuesta.SUCCESS).errorCode(ErroresRespuesta.OK).data("").build();
+                        + "<br/><p style=\"font-size: 10px;\">https://www.humansbionics.co.uk:55411/AndaWeb4/api/v1/activarCuenta.jsp?t="
+                        + tokenCorreo + "</p>"
+                        + "<br/><br/><img src=\"https://www.humansbionics.co.uk:55411/AndaWeb4/resources/img/piefirmacorreo.png\"/>";
+                new EnviarMail().sendwithMessage("Reenvio de correo: Verificacion", correoContenido,
+                        u.getEmailInfoUsuario());
+                return new Respuesta.Builder().status(Respuesta.SUCCESS).errorCode(ErroresRespuesta.OK).data("")
+                        .build();
             } else {
                 return Util.getError(ErroresRespuesta.REENVIARCORREOTOKEN_ERROR_2);
             }
@@ -871,19 +924,24 @@ public class DatabaseManager {
                 String correoContenido = "<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>"
                         + "<html xmlns=\"http://www.w3.org/1999/xhtml\">"
                         + "<body style=\"margin:0;padding:0;\">"
-                        + "<img src=\"https://www.humanbionics.co.uk:55411/AndaWeb4/resources/img/headcorreo.png\"/>"
+                        + "<img src=\"https://www.humansbionics.co.uk:55411/AndaWeb4/resources/img/headcorreo.png\"/>"
                         + "<br/><br/><h1>Recuperaci&oacute;n de contrase&ntilde;a</h1>"
                         + "<br/><br/>Se ha enviado esta informaci&oacute;n a tu correo, si no has sido tu ignora este mensaje."
                         + "<br/><br/>"
                         + "<br/><br/>Usuario:"
                         + "<br/><br/>" + u.getEmailInfoUsuario() + ""
                         + "<br/><br/>Link de recuperaci&oacute;n de Contrase&ntilde;a: "
-                        + "<br/> <a href=\"https://www.humanbionics.co.uk:55411/AndaWeb4/recuperarContrasena.jsp?t=" + u.getTokenRecuperarContrasena() + "\">https://www.humanbionics.co.uk:55411/AndaWeb4/recuperarContrasena.jsp?t=" + u.getTokenRecuperarContrasena() + " </a>"
-                        + "<br/><br/><img src=\"https://www.humanbionics.co.uk:55411/AndaWeb4/resources/img/piefirmacorreo.png\"/>"
+                        + "<br/> <a href=\"https://www.humansbionics.co.uk:55411/AndaWeb4/recuperarContrasena.jsp?t="
+                        + u.getTokenRecuperarContrasena()
+                        + "\">https://www.humansbionics.co.uk:55411/AndaWeb4/recuperarContrasena.jsp?t="
+                        + u.getTokenRecuperarContrasena() + " </a>"
+                        + "<br/><br/><img src=\"https://www.humansbionics.co.uk:55411/AndaWeb4/resources/img/piefirmacorreo.png\"/>"
                         + "</body>"
                         + "</html>";
-                new EnviarMail().sendwithMessage("Recuperación de Contraseña: Usuario", correoContenido, u.getEmailInfoUsuario());
-                return new Respuesta.Builder().status(Respuesta.SUCCESS).errorCode(ErroresRespuesta.OK).data("").build();
+                new EnviarMail().sendwithMessage("Recuperación de Contraseña: Usuario", correoContenido,
+                        u.getEmailInfoUsuario());
+                return new Respuesta.Builder().status(Respuesta.SUCCESS).errorCode(ErroresRespuesta.OK).data("")
+                        .build();
             } else {
                 return Util.getError(ErroresRespuesta.ENVIARCONTRASENA_ERROR_2);
             }
@@ -909,7 +967,8 @@ public class DatabaseManager {
 
                 aipvo.setDescInfoPromo(aip.getDescInfoPromo());
                 aipvo.setPromoActiva(aip.getPromoActiva());
-                return new Respuesta.Builder().status(Respuesta.SUCCESS).errorCode(ErroresRespuesta.OK).data(aipvo).build();
+                return new Respuesta.Builder().status(Respuesta.SUCCESS).errorCode(ErroresRespuesta.OK).data(aipvo)
+                        .build();
             } else {
                 return Util.getError(ErroresRespuesta.GETINFOPROMO_ERROR_2);
             }
@@ -964,11 +1023,12 @@ public class DatabaseManager {
 
                     comprasLogFacade.create(comprasLog);
 
-                    String correoContenido = "<img src=\"https://www.humanbionics.co.uk:55411/AndaWeb4/resources/img/headcorreo.png\"/>"
+                    String correoContenido = "<img src=\"https://www.humansbionics.co.uk:55411/AndaWeb4/resources/img/headcorreo.png\"/>"
                             + "<br/><br/><h1>Gracias.</h1>"
                             + "<br/>Has realizado una compra desde la aplicaci&oacute;n <a href=\"https://play.google.com/store/apps/details?id=com.hmb.humanbionics.andabasic\">Anda Basic</a> de <a href=\"https://www.hubionics.com/\">Human Bionics SAS</a>"
                             + "<br/><br/>"
-                            + "<br/><br/><h3>ID de compra: " + compraGoogleVO.getGoogleOrderID() + " -#- ( " + invoice.getIdInvoice() + " )</h3>"
+                            + "<br/><br/><h3>ID de compra: " + compraGoogleVO.getGoogleOrderID() + " -#- ( "
+                            + invoice.getIdInvoice() + " )</h3>"
                             + "<br/><h3>Fecha de compra: " + date + "</h3>"
                             + "<br/><br/>Descripci&oacute;n: " + p.getDescPaquete()
                             + "<br/><br/>Item: \"" + p.getTituloPaquete() + "\""
@@ -977,14 +1037,17 @@ public class DatabaseManager {
                             + "<hr>"
                             + "Preguntas? Cont&aacute;ctate con nosotros a <a href=\"mailto:info@hubionics.com\">info@hubionics.com</a>"
                             + "<br/> Human Bionics SAS &copy; 2018 &copy; Todos los derechos reservados. "
-                            + "<br/><br/><img src=\"https://www.humanbionics.co.uk:55411/AndaWeb4/resources/img/piefirmacorreo.png\"/>";
-                    new EnviarMail().sendwithMessage("Recibo de compra - Anda Basic", correoContenido, u.getEmailInfoUsuario());
+                            + "<br/><br/><img src=\"https://www.humansbionics.co.uk:55411/AndaWeb4/resources/img/piefirmacorreo.png\"/>";
+                    new EnviarMail().sendwithMessage("Recibo de compra - Anda Basic", correoContenido,
+                            u.getEmailInfoUsuario());
                     SendNotification.newPurchaseRegistered();
-                    return new Respuesta.Builder().status(Respuesta.SUCCESS).errorCode(ErroresRespuesta.OK).data("").build();
+                    return new Respuesta.Builder().status(Respuesta.SUCCESS).errorCode(ErroresRespuesta.OK).data("")
+                            .build();
                 } else {
 
                     ComprasLog comprasLog = new ComprasLog();
-                    comprasLog.setDescripcionComprasLog("Error: " + ErroresRespuesta.REGISTRAR_COMPRA_GOOGLE_ERROR_2 + " procesando compra con id " + compraGoogleVO.getGoogleIdInAppPurchase());
+                    comprasLog.setDescripcionComprasLog("Error: " + ErroresRespuesta.REGISTRAR_COMPRA_GOOGLE_ERROR_2
+                            + " procesando compra con id " + compraGoogleVO.getGoogleIdInAppPurchase());
                     comprasLog.setFechaComprasLog(new Date());
                     comprasLog.setIdUsuario(u);
 
@@ -995,7 +1058,8 @@ public class DatabaseManager {
                 }
             } else {
                 ComprasLog comprasLog = new ComprasLog();
-                comprasLog.setDescripcionComprasLog("Error: " + ErroresRespuesta.REGISTRAR_COMPRA_GOOGLE_ERROR_2 + "procesando compra con id " + compraGoogleVO.getGoogleIdInAppPurchase());
+                comprasLog.setDescripcionComprasLog("Error: " + ErroresRespuesta.REGISTRAR_COMPRA_GOOGLE_ERROR_2
+                        + "procesando compra con id " + compraGoogleVO.getGoogleIdInAppPurchase());
                 comprasLog.setFechaComprasLog(new Date());
                 comprasLog.setIdUsuario(u);
                 comprasLogFacade.create(comprasLog);
@@ -1020,7 +1084,8 @@ public class DatabaseManager {
                     u.setFirebaseToken(usuarioVO.getFirebaseToken());
                     usuarioFacade.edit(u);
                 }
-                return new Respuesta.Builder().status(Respuesta.SUCCESS).errorCode(ErroresRespuesta.OK).data("").build();
+                return new Respuesta.Builder().status(Respuesta.SUCCESS).errorCode(ErroresRespuesta.OK).data("")
+                        .build();
             } else {
                 return Util.getError(ErroresRespuesta.VERIFICAR_TOKEN_FIREBASE_ERROR_2);
             }
@@ -1031,16 +1096,18 @@ public class DatabaseManager {
         }
     }
 
-    public Respuesta getSonidosKey(/*AppVO appVO*/) {
+    public Respuesta getSonidosKey(/* AppVO appVO */) {
 
-        //TODO REALIZAR VERIFICACION OBLIGATORIA DE LA PROCEDENCIA DE LA CONSULTA (APP ANDA)
+        // TODO REALIZAR VERIFICACION OBLIGATORIA DE LA PROCEDENCIA DE LA CONSULTA (APP
+        // ANDA)
         try {
             KeyVault keyVault = keyVaultFacade.find(1);
 
             if (keyVault != null) {
                 KeyVaultVO keyVaultVO = new KeyVaultVO();
                 keyVaultVO.setSecretKey(keyVault.getSecretKey());
-                return new Respuesta.Builder().status(Respuesta.SUCCESS).errorCode(ErroresRespuesta.OK).data(keyVaultVO).build();
+                return new Respuesta.Builder().status(Respuesta.SUCCESS).errorCode(ErroresRespuesta.OK).data(keyVaultVO)
+                        .build();
             } else {
                 return Util.getError(ErroresRespuesta.GET_SONIDOS_KEY_ERROR_2);
             }
@@ -1061,7 +1128,8 @@ public class DatabaseManager {
 
                 u.setUsuarioLastLogin(new Date());
                 usuarioFacade.edit(u);
-                return new Respuesta.Builder().status(Respuesta.SUCCESS).errorCode(ErroresRespuesta.OK).data("").build();
+                return new Respuesta.Builder().status(Respuesta.SUCCESS).errorCode(ErroresRespuesta.OK).data("")
+                        .build();
             } else {
                 return Util.getError(ErroresRespuesta.UPDATE_LAST_LOGIN_ERROR_2);
             }
@@ -1088,7 +1156,8 @@ public class DatabaseManager {
 
                 andaRequirementsFacade.create(andaRequirements);
                 SendNotification.newRequirement();
-                return new Respuesta.Builder().status(Respuesta.SUCCESS).errorCode(ErroresRespuesta.OK).data("").build();
+                return new Respuesta.Builder().status(Respuesta.SUCCESS).errorCode(ErroresRespuesta.OK).data("")
+                        .build();
             } else {
                 return Util.getError(ErroresRespuesta.SEND_REQUIREMENT_ERROR_2);
             }
@@ -1124,7 +1193,8 @@ public class DatabaseManager {
                     informacionUsuarioFacade.edit(iu);
                 }
 
-                return new Respuesta.Builder().status(Respuesta.SUCCESS).errorCode(ErroresRespuesta.OK).data("").build();
+                return new Respuesta.Builder().status(Respuesta.SUCCESS).errorCode(ErroresRespuesta.OK).data("")
+                        .build();
             } else {
                 return Util.getError(ErroresRespuesta.SEND_DATOS_MEDICOS_ERROR_2);
             }
@@ -1139,7 +1209,8 @@ public class DatabaseManager {
     public Respuesta getDatosMedicos(UsuarioVO usuarioVO) {
 
         try {
-            UsuarioDatosMedicos udm = usuarioDatosMedicosFacade.findByIdUsuarioWhereLastDate(usuarioFacade.find(usuarioVO.getIdUsuario()));
+            UsuarioDatosMedicos udm = usuarioDatosMedicosFacade
+                    .findByIdUsuarioWhereLastDate(usuarioFacade.find(usuarioVO.getIdUsuario()));
 
             if (udm != null) {
 
@@ -1148,14 +1219,16 @@ public class DatabaseManager {
                 datosMedicosVO.setPeso(udm.getPesoDato());
                 datosMedicosVO.setImc(udm.getImcDato());
 
-                InformacionUsuario informacionUsuario = informacionUsuarioFacade.findByIdUsuario(usuarioFacade.find(usuarioVO.getIdUsuario()));
+                InformacionUsuario informacionUsuario = informacionUsuarioFacade
+                        .findByIdUsuario(usuarioFacade.find(usuarioVO.getIdUsuario()));
 
                 if (informacionUsuario != null) {
                     datosMedicosVO.setEstatura(informacionUsuario.getEstaturaInfoUsuario());
                 }
                 datosMedicosVO.setCircun_pantorrilla(udm.getCircunferenciaPantorrillaDato());
                 datosMedicosVO.setPerimetro_muslo(udm.getPerimetroMusloDato());
-                return new Respuesta.Builder().status(Respuesta.SUCCESS).errorCode(ErroresRespuesta.OK).data(datosMedicosVO).build();
+                return new Respuesta.Builder().status(Respuesta.SUCCESS).errorCode(ErroresRespuesta.OK)
+                        .data(datosMedicosVO).build();
             } else {
                 return Util.getError(ErroresRespuesta.GET_DATOS_MEDICOS_ERROR_2);
             }
@@ -1172,13 +1245,13 @@ public class DatabaseManager {
 
             if (usuario != null) {
 
-                return 2; //Usuario va a recuperar contrasena
+                return 2; // Usuario va a recuperar contrasena
 
             } else {
-                return 1; //Token no figura
+                return 1; // Token no figura
             }
         } catch (Exception e) {
-            return 0; //Error general
+            return 0; // Error general
         }
     }
 
@@ -1193,20 +1266,20 @@ public class DatabaseManager {
                         usuario.setPasswdUsuario(HashEncryption.getHashedTry2(pwd1));
                         usuario.setTokenRecuperarContrasena("");
                         usuarioFacade.edit(usuario);
-                        return 4; //password cambiado correctamente
+                        return 4; // password cambiado correctamente
                     } else {
-                        return 3; //password no puede ser igual que el anterior
+                        return 3; // password no puede ser igual que el anterior
                     }
 
                 } else {
-                    return 2; //passwords no coinciden
+                    return 2; // passwords no coinciden
                 }
 
             } else {
-                return 1; //Token no figura
+                return 1; // Token no figura
             }
         } catch (Exception e) {
-            return 0; //Error general
+            return 0; // Error general
         }
     }
 
@@ -1228,7 +1301,8 @@ public class DatabaseManager {
                     chartVOs.add(datosMedicosChartVO);
                 }
 
-                return new Respuesta.Builder().status(Respuesta.SUCCESS).errorCode(ErroresRespuesta.OK).data(chartVOs).build();
+                return new Respuesta.Builder().status(Respuesta.SUCCESS).errorCode(ErroresRespuesta.OK).data(chartVOs)
+                        .build();
             } else {
                 return Util.getError(ErroresRespuesta.GET_DATOS_MEDICOS_CHART_ERROR_2);
             }
